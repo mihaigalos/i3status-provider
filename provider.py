@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from netatmo_indicator.netatmo_service_wrapper import Netatmo
+import requests
 
 
 class Provider:
@@ -17,7 +18,16 @@ class NetatmoProvider(Provider):
         return " ".join(("{}:{}°".format(*i) for i in data.items()))
 
 
+class WttrInProvider(Provider):
+
+    def get(self):
+        r = requests.get("http://wttr.in/Munich?format=\"%C\"")
+        return str(r.json())
+
+
 class ProviderFactory:
     def new(self, type_name, credentials_file):
         if type_name == "netatmo":
             return NetatmoProvider(credentials_file)
+        if type_name == "wttrin":
+            return WttrInProvider("")
