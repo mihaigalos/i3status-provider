@@ -28,7 +28,7 @@ class WttrInProvider(Provider):
 
 class TranmissionProvider(Provider):
     def get(self):
-        output = ""
+        result = ""
         for status in ["Downloading", "Seeding"]:
             bashCommand = "transmission-remote  192.168.0.101:9091 -l | head -n -1 | grep " + \
                 status + " | wc -l"
@@ -38,8 +38,8 @@ class TranmissionProvider(Provider):
 
             count = int(output)
             if count > 0:
-                output = status + ": " + str(count)
-        return output
+                result = status + ": " + str(count)
+        return result
 
 
 class ProviderFactory:

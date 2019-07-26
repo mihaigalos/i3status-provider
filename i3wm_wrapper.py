@@ -41,11 +41,12 @@ class I3StatusProvider:
     def insertData(self, line, position=0):
         out_json = json.loads(line)
         for provider_name, provider in self.providers.iteritems():
+            data_to_insert = provider.get()
+            if data_to_insert != "":
+                jsonized_string = {"name": provider_name, "markup": provider_name,
+                                   "full_text": data_to_insert}
 
-            jsonized_string = {"name": provider_name, "markup": provider_name,
-                               "full_text": provider.get()}
-
-            out_json.insert(position, jsonized_string)
+                out_json.insert(position, jsonized_string)
         return out_json
 
 
