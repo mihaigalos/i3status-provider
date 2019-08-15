@@ -51,9 +51,10 @@ class I3StatusProvider:
 
 
 i3status_provider = I3StatusProvider(
-    {"netatmo": "/home/mihai/.netatmo-credentials.yaml",
-     "wttrin": "",
-     "transmission": "",
+    {
+        "netatmo": "/home/mihai/.netatmo-credentials.yaml",
+        "wttrin": "",
+        "transmission": "",
      }
 )
 i3status_provider.constructOutputString()

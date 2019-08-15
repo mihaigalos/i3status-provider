@@ -11,6 +11,12 @@ class Provider:
     def get():
         raise NotImplementedError("Please Implement this method")
 
+    def isJson(self, input):
+        try:
+            json_object = json.loads(input)
+        except ValueError as e:
+            return False
+        return True
 
 class NetatmoProvider(Provider):
 
@@ -22,8 +28,12 @@ class NetatmoProvider(Provider):
 class WttrInProvider(Provider):
 
     def get(self):
-        r = requests.get("http://wttr.in/Munich?format=\"%C\"")
-        return str(r.json())
+        response = requests.get("http://wttr.in/Munich?format=\"%C\"")
+        try:
+            result = response.json()
+            return result
+        except Exception as e:
+            return ""
 
 
 class TranmissionProvider(Provider):
