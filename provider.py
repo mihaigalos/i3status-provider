@@ -48,7 +48,9 @@ class TranmissionProvider(Provider):
 
             count = int(output)
             if count > 0:
-                result = status + ": " + str(count)
+                if len(result)>0:
+                    result +=", "
+                result += status + ": " + str(count)
         return result
 
 
