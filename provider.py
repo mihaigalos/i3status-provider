@@ -18,17 +18,16 @@ class Provider:
             return False
         return True
 
-class NetatmoProvider(Provider):
 
+class NetatmoProvider(Provider):
     def get(self):
         (data, timestamp) = Netatmo(self.credentials_file).get_data()
         return " ".join(("{}:{}°".format(*i) for i in data.items()))
 
 
 class WttrInProvider(Provider):
-
     def get(self):
-        response = requests.get("http://wttr.in/Munich?format=\"%C\"")
+        response = requests.get('http://wttr.in/Munich?format="%C"')
         try:
             result = response.json()
             return result
@@ -40,25 +39,45 @@ class TranmissionProvider(Provider):
     def get(self):
         result = ""
         for status in ["Downloading", "Seeding"]:
-            bashCommand = "transmission-remote  192.168.0.101:9091 -l | head -n -1 | grep " + \
-                status + " | wc -l"
+            bashCommand = "transmission-remote  192.168.0.101:9091 -l | head -n -1 | grep " + status + " | wc -l"
 
             output, error = subprocess.Popen(
-                bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).communicate()
+                bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+            ).communicate()
 
             count = int(output)
             if count > 0:
-                if len(result)>0:
-                    result +=", "
+                if len(result) > 0:
+                    result += ", "
                 result += status + ": " + str(count)
         return result
 
 
+class BashOverSSHCommandProvider(Provider):
+    def __init__(self, bashCommands):
+        self.bashCommands = bashCommands
+
+    def get(self):
+        result = "Cache:"
+        i = 1
+        for bashCommand in self.bashCommands:
+            output, error = subprocess.Popen(
+                bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+            ).communicate()
+            result += " " + output
+            if i < len(self.bashCommands):
+                result += ","
+            i = i + 1
+        return result
+
+
 class ProviderFactory:
-    def new(self, type_name, credentials_file):
+    def new(self, type_name, args):
         if type_name == "netatmo":
-            return NetatmoProvider(credentials_file)
-        if type_name == "wttrin":
+            return NetatmoProvider(args)
+        elif type_name == "wttrin":
             return WttrInProvider("")
-        if type_name == "transmission":
+        elif type_name == "transmission":
             return TranmissionProvider("")
+        elif type_name == "bash_over_ssh":
+            return BashOverSSHCommandProvider(args)
