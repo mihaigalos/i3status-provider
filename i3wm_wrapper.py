@@ -38,6 +38,7 @@ class I3StatusProvider:
                 sys.stdout.write(line)
 
     def insertData(self, line, position=0):
+
         out_json = json.loads(line)
         for provider_name, provider in self.providers.iteritems():
             data_to_insert = provider.get()
@@ -55,6 +56,7 @@ i3status_provider = I3StatusProvider(
         # "transmission": "",
         "bash_over_ssh": [
             "ssh teamci@teamci-1 -- df -h | grep /dev/mapper/ubuntu--vg-root | cut -d' ' -f9 | tr -d '\n'",
+            "ssh -T teamci@teamci-1 -- cat /proc/loadavg | cut -d' ' -f1 | tr -d '\n'",
             "if [ $(ssh teamci@teamci-1 -- docker ps | grep buchgr/bazel-remote-cache | wc -l | tr -d '\n') -eq 1 ]; then echo Up| tr -d '\n'; else echo Down| tr -d '\n'; fi",
         ],
     }

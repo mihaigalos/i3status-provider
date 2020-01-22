@@ -61,9 +61,11 @@ class BashOverSSHCommandProvider(Provider):
         result = "Cache:"
         i = 1
         for bashCommand in self.bashCommands:
+
             output, error = subprocess.Popen(
                 bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
             ).communicate()
+
             result += " " + output
             if i < len(self.bashCommands):
                 result += ","
