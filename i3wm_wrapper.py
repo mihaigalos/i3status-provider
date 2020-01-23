@@ -55,7 +55,7 @@ i3status_provider = I3StatusProvider(
         "wttrin": "",
         # "transmission": "",
         "bash_over_ssh": [
-            "ssh teamci@teamci-1 -- df -h | grep /dev/mapper/ubuntu--vg-root | cut -d' ' -f9 | tr -d '\n'",
+            "ssh teamci@teamci-1 -- df -h | grep /dev/mapper/ubuntu--vg-root | awk '{print $5}' | tr -d '\n'",
             "ssh -T teamci@teamci-1 -- cat /proc/loadavg | cut -d' ' -f1 | tr -d '\n'",
             "if [ $(ssh teamci@teamci-1 -- docker ps | grep buchgr/bazel-remote-cache | wc -l | tr -d '\n') -eq 1 ]; then echo Up| tr -d '\n'; else echo Down| tr -d '\n'; fi",
         ],
