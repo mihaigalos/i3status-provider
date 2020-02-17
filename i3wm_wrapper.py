@@ -19,7 +19,7 @@ class I3StatusProvider:
     def __init__(self, providers_with_credentials):
         self.providers = {}
         factory = ProviderFactory()
-        for provider_name, provider_credentials in providers_with_credentials.iteritems():
+        for provider_name, provider_credentials in providers_with_credentials.items():
             self.providers.update({provider_name: factory.new(provider_name, provider_credentials)})
 
     def constructOutputString(self):
@@ -31,7 +31,7 @@ class I3StatusProvider:
                 try:
                     out_json = self.insertData(line)
                 except Exception as e:
-                    out_json.insert(0, e.message)
+                    out_json.insert(0, str(e))
                 sys.stdout.write(json.dumps(out_json) + ",")
 
             else:
@@ -40,7 +40,7 @@ class I3StatusProvider:
     def insertData(self, line, position=0):
 
         out_json = json.loads(line)
-        for provider_name, provider in self.providers.iteritems():
+        for provider_name, provider in self.providers.items():
             data_to_insert = provider.get()
             if data_to_insert != "":
                 jsonized_string = {"name": provider_name, "markup": provider_name, "full_text": data_to_insert}
@@ -53,7 +53,7 @@ i3status_provider = I3StatusProvider(
     {
         "netatmo": "/home/mihai/.netatmo-credentials.yaml",
         "wttrin": "",
-        # "transmission": "",
+        "transmission": "",
         "bash_over_ssh": [
             "ssh teamci@teamci-1 -- df -h | grep /bazel_cache | awk '{print $5}' | tr -d '\n'",
             "ssh -T teamci@teamci-1 -- cat /proc/loadavg | cut -d' ' -f1 | tr -d '\n'",

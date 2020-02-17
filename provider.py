@@ -65,8 +65,7 @@ class BashOverSSHCommandProvider(Provider):
             output, error = subprocess.Popen(
                 bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
             ).communicate()
-
-            result += " " + output
+            result += " " + output.decode("utf-8")
 
         return result
 
