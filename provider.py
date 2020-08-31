@@ -53,12 +53,13 @@ class TranmissionProvider(Provider):
         return result
 
 
-class BashOverSSHCommandProvider(Provider):
-    def __init__(self, bashCommands):
-        self.bashCommands = bashCommands
+class BashProvider(Provider):
+    def __init__(self, arguments):
+        self.name = arguments[0]
+        self.bashCommands = arguments[1]
 
     def get(self):
-        result = "Cache:"
+        result = self.name
 
         for bashCommand in self.bashCommands:
 
@@ -78,5 +79,5 @@ class ProviderFactory:
             return WttrInProvider("")
         elif type_name == "transmission":
             return TranmissionProvider("")
-        elif type_name == "bash_over_ssh":
-            return BashOverSSHCommandProvider(args)
+        elif type_name == "bash":
+            return BashProvider(args)

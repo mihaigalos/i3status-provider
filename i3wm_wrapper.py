@@ -53,12 +53,17 @@ i3status_provider = I3StatusProvider(
     {
         "netatmo": "/home/mihai/.netatmo-credentials.yaml",
         "wttrin": "",
-        "transmission": "",
-        "bash_over_ssh": [
-            "ssh teamci@teamci-1 -- df -h | grep /bazel_cache | awk '{print $5}' | tr -d '\n'",
-            "ssh -T teamci@teamci-1 -- cat /proc/loadavg | cut -d' ' -f1 | tr -d '\n'",
-            "if [ $(ssh teamci@teamci-1 -- docker ps | grep buchgr/bazel-remote-cache | wc -l | tr -d '\n') -eq 1 ]; then echo Up| tr -d '\n'; else echo Down| tr -d '\n'; fi",
-        ],
+        # "transmission": "",
+        "bash": (
+            "Cache:",
+            [
+                "ssh teamci@teamci-1 -- df -h | grep /bazel_cache | awk '{print $5}' | tr -d '\n'",
+                "ssh -T teamci@teamci-1 -- cat /proc/loadavg | cut -d' ' -f1 | tr -d '\n'",
+                "if [ $(ssh teamci@teamci-1 -- docker ps | grep buchgr/bazel-remote-cache | wc -l | tr -d '\n') -eq 1 ]; then echo Up| tr -d '\n'; else echo Down| tr -d '\n'; fi",
+                # "cd /home/mihai/git/bazel_remote_cache_server/remote_cache_stats/src &&         ./invoke_own_metrics.sh teamci teamci-1 --rate | tr -d '\n';"
+            ],
+        ),
+        "bash": ("EOS:", ["curl --silent rate.sx/1EOS | tr -d '\n'"]),
     }
 )
 i3status_provider.constructOutputString()
