@@ -54,7 +54,7 @@ i3status_provider = I3StatusProvider(
         "netatmo": "/home/mihai/.netatmo-credentials.yaml",
         "wttrin": "",
         # "transmission": "",
-        "bash": (
+        "bash_cache": (
             "Cache:",
             [
                 "ssh teamci@teamci-1 -- df -h | grep /bazel_cache | awk '{print $5}' | tr -d '\n'",
@@ -63,7 +63,7 @@ i3status_provider = I3StatusProvider(
                 # "cd /home/mihai/git/bazel_remote_cache_server/remote_cache_stats/src &&         ./invoke_own_metrics.sh teamci teamci-1 --rate | tr -d '\n';"
             ],
         ),
-        "bash": ("EOS:", ["curl --silent rate.sx/1EOS | tr -d '\n'"]),
+        "bash_eos": ("EOS:", ['LC_NUMERIC="C" && curl --silent rate.sx/1EOS | tr -d \'\n\' | xargs printf "%0.2f"']),
     }
 )
 i3status_provider.constructOutputString()

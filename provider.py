@@ -79,5 +79,5 @@ class ProviderFactory:
             return WttrInProvider("")
         elif type_name == "transmission":
             return TranmissionProvider("")
-        elif type_name == "bash":
+        elif "bash" in type_name:
             return BashProvider(args)
