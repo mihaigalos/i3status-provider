@@ -57,6 +57,10 @@ class BashProvider(Provider):
     def __init__(self, arguments):
         self.name = arguments[0]
         self.bashCommands = arguments[1]
+        if len(arguments) == 3:
+            self.suffix = str(arguments[2])
+        else:
+            self.suffix = ""
 
     def get(self):
         result = self.name
@@ -67,7 +71,7 @@ class BashProvider(Provider):
                 bashCommand, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
             ).communicate()
             result += " " + output.decode("utf-8")
-
+        result += self.suffix
         return result
 
 
