@@ -53,19 +53,15 @@ i3status_provider = I3StatusProvider(
     {
         "netatmo": "/home/mihai/.netatmo-credentials.yaml",
         "wttrin": "",
-        # "transmission": "",
-        "bash_cache": (
-            "Cache:",
-            [
-                "ssh teamci@teamci-1 -- df -h | grep /bazel_cache | awk '{print $5}' | tr -d '\n'",
-                "ssh -T teamci@teamci-1 -- cat /proc/loadavg | cut -d' ' -f1 | tr -d '\n'",
-                "if [ $(ssh teamci@teamci-1 -- docker ps | grep buchgr/bazel-remote-cache | wc -l | tr -d '\n') -eq 1 ]; then echo Up| tr -d '\n'; else echo Down| tr -d '\n'; fi",
-                # "cd /home/mihai/git/bazel_remote_cache_server/remote_cache_stats/src &&         ./invoke_own_metrics.sh teamci teamci-1 --rate | tr -d '\n';"
-            ],
-        ),
+        "transmission": "",
         "bash_eos": (
             "EOS:",
-            ['LC_NUMERIC="C" && curl --silent rate.sx/1EOS | tr -d \'\n\' | xargs printf "%0.3f"'],
+            ['LC_NUMERIC="C" && curl --silent rate.sx/1EOS | tr -d \'\n\' | xargs printf "%0.2f"'],
+            "$",
+        ),
+        "bash_btc": (
+            "BTC:",
+            ['LC_NUMERIC="C" && curl --silent rate.sx/1BTC | tr -d \'\n\' | xargs printf "%0.0f"'],
             "$",
         ),
     }
