@@ -1,3 +1,6 @@
 [submodule "netatmo-indicator"]
 	path = netatmo-indicator
 	url = https://github.com/mihaigalos/netatmo-indicator
+[submodule "config"]
+	path = config
+	url = git@github.com:mihaigalos/config.git

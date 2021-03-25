@@ -19,9 +19,7 @@ general {
 }
 ```
 
-Next, edit your `/.config/i3/config` remove the `bar` block and replace it with:
+
 ```
-bar {
-    status_command <i3wm_wrapper>/i3wm_wrapper.sh
-}
+ln -s $(realpath config/i3/config) ~/.config/i3/config
 ```
