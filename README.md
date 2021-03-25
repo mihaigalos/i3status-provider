@@ -21,5 +21,7 @@ general {
 
 
 ```
-ln -s $(realpath config/i3/config) ~/.config/i3/config
+cd config/
+./install.sh
+cd -
 ```
