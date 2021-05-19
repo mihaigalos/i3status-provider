@@ -54,11 +54,6 @@ i3status_provider = I3StatusProvider(
         "netatmo": "/home/mihai/.netatmo-credentials.yaml",
         "wttrin": "",
         #"transmission": "",
-        "bash_eos": (
-            "EOS:",
-            ['LC_NUMERIC="C" && curl --silent rate.sx/1EOS | tr -d \'\n\' | xargs printf "%0.2f"'],
-            "$",
-        ),
         "bash_btc": (
             "BTC:",
             ['LC_NUMERIC="C" && curl --silent rate.sx/1BTC | tr -d \'\n\' | xargs printf "%0.0f"'],
