@@ -1,7 +1,5 @@
 #!/bin/zsh
 
-source ~/.zshrc
-
 i3status -c /etc/i3status.conf | while :
 do
     read line
