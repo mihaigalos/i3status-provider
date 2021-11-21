@@ -27,7 +27,7 @@ class NetatmoProvider(Provider):
 
 class WttrInProvider(Provider):
     def get(self):
-        response = requests.get('http://wttr.in/Munich?format="%C"')
+        response = requests.get('http://wttr.in/Vienna?format="%C"')
         try:
             result = response.json()
             return result
