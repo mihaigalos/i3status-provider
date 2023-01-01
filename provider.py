@@ -74,14 +74,21 @@ class BashProvider(Provider):
         result += self.suffix
         return result
 
+class EmptyProvider(Provider):
+    def __init__(self, arguments):
+        pass
+    def get(self):
+        pass
 
 class ProviderFactory:
     def new(self, type_name, args):
         if type_name == "netatmo":
             return NetatmoProvider(args)
-        elif type_name == "wttrin":
+        if type_name == "wttrin":
             return WttrInProvider("")
         elif type_name == "transmission":
             return TranmissionProvider("")
         elif "bash" in type_name:
             return BashProvider(args)
+        else:
+            return EmptyProvider(args)
