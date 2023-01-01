@@ -25,6 +25,18 @@ class NetatmoProvider(Provider):
         return " ".join(("{}:{}°".format(*i) for i in data.items()))
 
 
+class OpenWeatherMapProvider(Provider):
+    def get(self):
+        query=open(self.credentials_file).read()
+        url=f"https://api.openweathermap.org/data/2.5/weather{query}"
+        response = requests.get(url)
+        try:
+            result = response.json()
+            return result["weather"][0]["description"].title()
+        except Exception as e:
+            return ""
+
+
 class WttrInProvider(Provider):
     def get(self):
         response = requests.get('http://wttr.in/Vienna?format="%C"')
@@ -84,7 +96,9 @@ class ProviderFactory:
     def new(self, type_name, args):
         if type_name == "netatmo":
             return NetatmoProvider(args)
-        if type_name == "wttrin":
+        elif type_name == "openweathermap":
+            return OpenWeatherMapProvider(args)
+        elif type_name == "wttrin":
             return WttrInProvider("")
         elif type_name == "transmission":
             return TranmissionProvider("")

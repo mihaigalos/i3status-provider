@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import os
 import sys
 from provider import *
 
@@ -51,8 +52,9 @@ class I3StatusProvider:
 
 i3status_provider = I3StatusProvider(
     {
-        "netatmo": "/home/mihai/.netatmo-credentials.yaml",
-        "wttrin": "",
+        "netatmo": os.path.expanduser("~/.netatmo-credentials.yaml"),
+        "openweathermap": os.path.expanduser("~/.openweathermap-query"),
+        #"wttrin": "",
         #"transmission": "",
         "bash_btc": (
             "BTC:",
